@@ -13,7 +13,7 @@ const ButtonComp = ({
   return (
     <TouchableOpacity
       style={[styles.main, {...btnStyle}]}
-      activeOpacity={0.8}
+      activeOpacity={0.7}
       onPress={onClick}>
       <Text style={[styles.text, {...textStyle}]}>{btnText}</Text>
     </TouchableOpacity>
