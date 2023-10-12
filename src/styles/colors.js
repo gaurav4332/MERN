@@ -1,6 +1,6 @@
 export default {
-  themeColor: '#46DE99',
-    // themeColor: '#2E2E2E',
+  // themeColor: '#46DE99',
+    themeColor: '#2E2E2E',
     cyan:"cyan",
     loaderColor: '#BB1DD8',
     lighPink:'#FA2DFAC6',

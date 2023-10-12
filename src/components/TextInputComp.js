@@ -1,36 +1,60 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
-import { moderateScale } from "@styles/responsiveSize";
+import {
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+} from "@styles/responsiveSize";
 import colors from "@styles/colors";
+import fonts from "@assets/fonts";
 
 const TextInputComp = ({
   value = "",
-  onChangeText = () => {},
-  placeholder = "d",
+  onChangeText,
+  placeholder = "",
+  secureText = true,
+  onPressSecure = () => {},
   inputStyle = {},
-  keyboardType="",
-  placeholderColor=colors.darkGrey
+  secureTextEntry=false,
+  keyboardType = {},
+  textStyle = {},
+  placeholderTextColor = colors.whiteColorOpacity70,
+  ...props
 }) => {
   return (
-    <TextInput
-      value={value}
-      keyboardType={keyboardType}
-      placeholder={placeholder}
-      onChangeText={onChangeText}
-      placeholderTextColor={placeholderColor}
-      style={{ ...styles.input, ...inputStyle }}
-    />
+    <View style={{ ...inputStyle, ...styles.inputStyle }}>
+      <TextInput
+        value={value}
+        keyboardType={keyboardType}
+        placeholder={placeholder}
+        secureTextEntry={secureTextEntry}
+        onChangeText={onChangeText}
+        placeholderTextColor={placeholderTextColor}
+        style={{ ...styles.input, ...inputStyle }}
+        {...props}
+      />
+        {!!secureText? <Text style={{...styles.textStyle,flex:0}} onPress={onPressSecure}>{secureText}</Text>:null}
+    </View>
   );
 };
 
 export default TextInputComp;
 
 const styles = StyleSheet.create({
-  input: {
-    height: moderateScale(45),
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    borderColor:colors.dimGrey
+  inputStyle: {
+    height: moderateScale(52),
+    borderRadius: moderateScale(8),
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: moderateScale(16),
+    alignItems: "center",
+    backgroundColor: colors.gray2,
+    marginBottom: moderateScaleVertical(16),
+  },
+  textStyle: {
+    fontSize: textScale(14),
+    fontFamily: fonts.regular,
+    flex: 1,
+    color: colors.whiteColor,
   },
 });
