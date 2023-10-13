@@ -16,6 +16,7 @@ import WrapperContainer from "@components/Container/WrapperContainer";
 import strings from "@constants/lang";
 import HeaderComp from "@components/HeaderComp";
 import fonts from "@assets/fonts";
+import TextComp from "@components/TextComp";
 
 const Login = ({ navigation }) => {
   const [data, setData] = useState({
@@ -39,17 +40,13 @@ const Login = ({ navigation }) => {
             }}
           >
             <View >
-              <Text style={styles.headingTextStyle}>
-                {strings.WELCOME_BACK}
-              </Text>
-              <Text style={styles.textStyle}>
-                {strings.WE_ARE_HAPPY_TO_SEE}
-              </Text>
+              <TextComp style={styles.headingTextStyle} text={strings.WELCOME_BACK}/>
+              <TextComp style={styles.textStyle} text={strings.WE_ARE_HAPPY_TO_SEE}/>
               <View style={{ marginTop: verticalScale(35) }}>
                 <TextInputComp
                   value={data.email}
                   keyboardType="email-address"
-                  placeholder="Enter Email"
+                  placeholder={strings.EMAIL}
                   inputStyle={styles.InputStyle}
                   onChangeText={(txt) => {
                     setData({
@@ -61,7 +58,7 @@ const Login = ({ navigation }) => {
                 <TextInputComp
                   value={data.password}
                   // keyboardType=""
-                  placeholder="Enter Password"
+                  placeholder={strings.PASSWORD}
                   inputStyle={styles.InputStyle}
                   secureTextEntry={secureText}
                   secureText={secureText ? strings.SHOW : strings.HIDE}

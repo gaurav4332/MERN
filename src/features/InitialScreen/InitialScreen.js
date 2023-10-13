@@ -16,9 +16,13 @@ import imagePath from "@constants/imagePath";
 import strings from "@constants/lang";
 import colors from "@styles/colors";
 import fonts from "@assets/fonts";
+import TextComp from "@components/TextComp";
+import { useSelector } from "react-redux";
 const { dispatch } = store;
 
 const InitialScreen = ({ navigation }) => {
+  const isDarkTheme = useSelector((state) => state?.appSetting?.isDark);
+
   const onLogin = () => {
     dispatch(saveUserData({ isLogin: true }));
   };
@@ -36,51 +40,66 @@ const InitialScreen = ({ navigation }) => {
           <Image source={imagePath.icLogo} style={styles.imageStyle} />
         </View>
         <View style={{ flex: 0.7, justifyContent: "flex-end" }}>
-          <Text style={styles.textStyle}>
-            {strings.BY_CLICKING_LOG_IN}{" "}
+          <TextComp text={strings.BY_CLICKING_LOG_IN}>
             <Text onPress={() => privacyPolicy(1)}>{strings.TERMS}</Text>.{" "}
             {strings.LEARN_HOW_WE_PRCOESS}{" "}
             <Text onPress={() => privacyPolicy(2)}>
               {strings.PRIVACY_POLICY}
             </Text>
-          </Text>
+          </TextComp>
           <ButtonComp
             btnText={strings.LOG_IN_WITH_PHONE_NUMBER}
             btnStyle={{ marginTop: verticalScale(30) }}
-            onClick={()=> navigation.navigate(navigationStrings.LOGIN)}
+            onClick={() => navigation.navigate(navigationStrings.LOGIN)}
           />
-          <Text
-            style={{ ...styles.textStyle, paddingVertical: verticalScale(20) }}
-          >
-            Or
-          </Text>
+          <TextComp
+            style={{ paddingVertical: verticalScale(20), textAlign: "center" }}
+            text="Or"
+          />
           <ButtonComp
             btnText={strings.LOG_IN_WITH_GOOGLE}
             leftImg={imagePath.icGoogle}
-            btnStyle={styles.btnStyle}
+            btnStyle={{
+              ...styles.btnStyle,
+              backgroundColor: isDarkTheme
+                ? colors.whiteColor
+                : colors.blackOpacity50,
+            }}
             textStyle={styles.btntextStyle}
           />
           <ButtonComp
             btnText={strings.LOG_IN_WITH_FACEBOOK}
             leftImg={imagePath.icFacebook}
-            btnStyle={styles.btnStyle}
+            btnStyle={{
+              ...styles.btnStyle,
+              backgroundColor: isDarkTheme
+                ? colors.whiteColor
+                : colors.blackOpacity50,
+            }}
             textStyle={styles.btntextStyle}
           />
           <ButtonComp
             btnText={strings.LOG_IN_WITH_APPLE}
             leftImg={imagePath.icApple}
-            btnStyle={styles.btnStyle}
+            btnStyle={{
+              ...styles.btnStyle,
+              backgroundColor: isDarkTheme
+                ? colors.whiteColor
+                : colors.blackOpacity50,
+            }}
             textStyle={styles.btntextStyle}
           />
-          <Text style={{ ...styles.textStyle, marginTop: verticalScale(15) }}>
-            {strings.NEW_HERE}{" "}
+          <TextComp
+            style={{ ...styles.textStyle, marginTop: verticalScale(15) }}
+            text={strings.NEW_HERE + ` `}
+          >
             <Text
-              onPress={() => alert("signup")}
+              onPress={() => navigation.navigate(navigationStrings.SIGNUP)}
               style={{ ...styles.textStyle, color: colors.blueColor }}
             >
               {strings.SIGN_UP}
             </Text>
-          </Text>
+          </TextComp>
         </View>
       </View>
     </WrapperContainer>
