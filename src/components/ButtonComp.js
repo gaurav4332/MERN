@@ -12,6 +12,7 @@ const ButtonComp = ({
   onClick = () => {},
   leftImg = null,
 }) => {
+
   return (
     <TouchableOpacity
       style={[styles.main, { ...btnStyle }]}

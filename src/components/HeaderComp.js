@@ -8,14 +8,14 @@ import { useSelector } from "react-redux";
 import colors from "@styles/colors";
 
 const HeaderComp = ({ onPressLeft }) => {
-  const isDarkTheme = useSelector((state) => state?.appSetting?.isDark);
+  const {selectedTheme} = useSelector((state) => state?.appSetting);
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={!!onPressLeft ? onPressLeft :()=> navigation.goBack()}
       >
-        <Image source={imagePath.icBack} style={{tintColor:isDarkTheme?colors.whiteColor:colors.blackColor}} />
+        <Image source={imagePath.icBack} style={{tintColor:selectedTheme=='dark'?colors.whiteColor:colors.blackColor}} />
       </TouchableOpacity>
     </View>
   );

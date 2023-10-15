@@ -17,5 +17,7 @@ export default {
  icFacebook: require('../assets/images/ic_facebook.png'),
  icApple: require('../assets/images/ic_apple.png'),
  icBack: require('../assets/images/ic_back_arrow.png'),
+ icBlueCheck: require('../assets/images/ic_blue_tick.png'),
+ icGreyCheck: require('../assets/images/ic_grey_tick.png'),
 
 }

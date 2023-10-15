@@ -7,6 +7,7 @@ import {
 } from "@styles/responsiveSize";
 import colors from "@styles/colors";
 import fonts from "@assets/fonts";
+import { useSelector } from "react-redux";
 
 const TextInputComp = ({
   value = "",
@@ -21,6 +22,8 @@ const TextInputComp = ({
   placeholderTextColor = colors.whiteColorOpacity70,
   ...props
 }) => {
+  const { lang } = useSelector((state) => state?.appSetting);
+
   return (
     <View style={{ ...inputStyle, ...styles.inputStyle }}>
       <TextInput
@@ -30,7 +33,7 @@ const TextInputComp = ({
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
         placeholderTextColor={placeholderTextColor}
-        style={{ ...styles.input, ...inputStyle }}
+        style={{ ...styles.input, ...inputStyle ,}}
         {...props}
       />
         {!!secureText? <Text style={{...styles.textStyle,flex:0}} onPress={onPressSecure}>{secureText}</Text>:null}

@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     fontSize: textScale(28),
     fontFamily: fonts.BarlowBold,
     color: colors.whiteColor,
+    textAlign:'left'
     // paddingVertical: verticalScale(30),
   },
   textStyle: {
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.BarlowRegular,
     color: colors.whiteColor,
     marginVertical: verticalScale(7),
+    textAlign:'left'
     // paddingVertical: verticalScale(30),
   },
   forgotText: {

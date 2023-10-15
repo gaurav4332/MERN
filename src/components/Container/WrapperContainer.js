@@ -4,13 +4,15 @@ import colors from "@styles/colors";
 import { useSelector } from "react-redux";
 
 const WrapperContainer = ({ style = {}, children }) => {
-  const isDarkTheme = useSelector((state) => state?.appSetting?.isDark);
+  const {selectedTheme} = useSelector((state) => state?.appSetting);
+  console.log("selected theme ",useSelector((state) => state?.appSetting));
   return (
     <View
       style={{
         ...styles.container,
         ...style,
-        backgroundColor: isDarkTheme ? colors.themeColor : colors.whiteColor,
+        backgroundColor:
+          selectedTheme == "dark" ? colors.themeColor : colors.whiteColor,
       }}
     >
       <SafeAreaView style={{ flex: 1 }}>{children}</SafeAreaView>

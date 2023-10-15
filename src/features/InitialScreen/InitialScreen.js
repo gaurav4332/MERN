@@ -1,8 +1,16 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  I18nManager,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
 import navigationStrings from "@navigation/navigationStrings";
 import ButtonComp from "@components/ButtonComp";
 import {
+  height,
   moderateScale,
   scale,
   textScale,
@@ -18,10 +26,18 @@ import colors from "@styles/colors";
 import fonts from "@assets/fonts";
 import TextComp from "@components/TextComp";
 import { useSelector } from "react-redux";
+import ModalComp from "@components/ModalComp";
+import TextCheckbox from "@components/TextCheckbox";
+import { LangData } from "@constants/LangTheme/Lang";
+import { ThemeData } from "@constants/LangTheme/Theme";
+import RNRestart from "react-native-restart";
+import { changeAppTheme, changeLanguage } from "@redux/actions/appSettings";
+import { changeLang } from "@redux/reducers/appSettings";
 const { dispatch } = store;
 
 const InitialScreen = ({ navigation }) => {
-  const isDarkTheme = useSelector((state) => state?.appSetting?.isDark);
+  const { selectedTheme, lang } = useSelector((state) => state?.appSetting);
+  const [isVisible, setIsVisible] = useState(false);
 
   const onLogin = () => {
     dispatch(saveUserData({ isLogin: true }));
@@ -33,10 +49,52 @@ const InitialScreen = ({ navigation }) => {
       alert("Privacy Policy");
     }
   };
+  const onPressLang = (lan) => {
+    setIsVisible(false);
+    if (lan == "ar" && lan !== lang) {
+      changeLanguage(lan);
+      I18nManager.forceRTL(true);
+      RNRestart.restart();
+    } else if (lan !== lang) {
+      changeLanguage(lan);
+      I18nManager.forceRTL(false);
+      RNRestart.restart();
+    }
+  };
+  const onPressTheme = (Theme) => {
+    setIsVisible(false);
+    changeAppTheme(Theme);
+  };
   return (
     <WrapperContainer>
       <View style={styles.container}>
-        <View style={{ flex: 0.3 }}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            ...styles.circularView,
+            backgroundColor:
+              selectedTheme == "dark" ? colors.whiteColor : colors.gray2,
+          }}
+          onPress={() => setIsVisible(true)}
+        >
+          <Text
+            style={{
+              ...styles.langtxt,
+              color:
+                selectedTheme == "dark" ? colors.blackColor : colors.whiteColor,
+            }}
+          >
+            {lang}
+          </Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            flex: 0.3,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Image source={imagePath.icLogo} style={styles.imageStyle} />
         </View>
         <View style={{ flex: 0.7, justifyContent: "flex-end" }}>
@@ -61,9 +119,10 @@ const InitialScreen = ({ navigation }) => {
             leftImg={imagePath.icGoogle}
             btnStyle={{
               ...styles.btnStyle,
-              backgroundColor: isDarkTheme
-                ? colors.whiteColor
-                : colors.blackOpacity50,
+              backgroundColor:
+                selectedTheme == "dark"
+                  ? colors.whiteColor
+                  : colors.blackOpacity50,
             }}
             textStyle={styles.btntextStyle}
           />
@@ -72,9 +131,10 @@ const InitialScreen = ({ navigation }) => {
             leftImg={imagePath.icFacebook}
             btnStyle={{
               ...styles.btnStyle,
-              backgroundColor: isDarkTheme
-                ? colors.whiteColor
-                : colors.blackOpacity50,
+              backgroundColor:
+                selectedTheme == "dark"
+                  ? colors.whiteColor
+                  : colors.blackOpacity50,
             }}
             textStyle={styles.btntextStyle}
           />
@@ -83,14 +143,19 @@ const InitialScreen = ({ navigation }) => {
             leftImg={imagePath.icApple}
             btnStyle={{
               ...styles.btnStyle,
-              backgroundColor: isDarkTheme
-                ? colors.whiteColor
-                : colors.blackOpacity50,
+              backgroundColor:
+                selectedTheme == "dark"
+                  ? colors.whiteColor
+                  : colors.blackOpacity50,
             }}
             textStyle={styles.btntextStyle}
           />
           <TextComp
-            style={{ ...styles.textStyle, marginTop: verticalScale(15) }}
+            style={{
+              textAlign: "right",
+              ...styles.textStyle,
+              marginTop: verticalScale(15),
+            }}
             text={strings.NEW_HERE + ` `}
           >
             <Text
@@ -102,6 +167,44 @@ const InitialScreen = ({ navigation }) => {
           </TextComp>
         </View>
       </View>
+      <ModalComp
+        isVisible={isVisible}
+        onBackdropPress={() => setIsVisible(false)}
+        style={{ justifyContent: "flex-end", margin: 0 }}
+      >
+        <View
+          style={{
+            backgroundColor: colors.whiteColor,
+            minHeight: moderateScale(height / 3.8),
+            borderTopLeftRadius: moderateScale(8),
+            borderTopRightRadius: moderateScale(8),
+            padding: moderateScale(16),
+          }}
+        >
+          <Text style={styles.headingStyles}>{strings.CHOOSE_LANGUAGE}</Text>
+          {LangData.map((val, i) => (
+            <TextCheckbox
+              key={String(i)}
+              text={val.title}
+              isSelected={lang == val.code}
+              onPress={() => onPressLang(val.code)}
+            />
+          ))}
+          <Text
+            style={{ ...styles.headingStyles, marginTop: moderateScale(12) }}
+          >
+            {strings.CHOOSE_THEME}
+          </Text>
+          {ThemeData.map((val, i) => (
+            <TextCheckbox
+              key={String(i)}
+              text={val.title}
+              isSelected={val.code == selectedTheme}
+              onPress={() => onPressTheme(val.code)}
+            />
+          ))}
+        </View>
+      </ModalComp>
     </WrapperContainer>
   );
 };
@@ -117,7 +220,7 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: scale(150),
     width: scale(150),
-    marginTop: verticalScale(30),
+    marginTop: verticalScale(20),
   },
   textStyle: {
     fontSize: textScale(12),
@@ -131,5 +234,25 @@ const styles = StyleSheet.create({
   },
   btntextStyle: {
     color: colors.blackColor,
+  },
+  circularView: {
+    height: moderateScale(40),
+    width: moderateScale(40),
+    backgroundColor: colors.redColor,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScale(40),
+    alignSelf: "flex-end",
+  },
+  langtxt: {
+    textTransform: "capitalize",
+    fontFamily: fonts.BarlowSemiBold,
+    fontSize: textScale(12),
+  },
+  headingStyles: {
+    fontSize: textScale(16),
+    color: colors.blackColor,
+    fontFamily: fonts.BarlowSemiBold,
+    marginBottom: verticalScale(10),
   },
 });
