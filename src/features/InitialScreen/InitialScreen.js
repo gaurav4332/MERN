@@ -31,8 +31,7 @@ import TextCheckbox from "@components/TextCheckbox";
 import { LangData } from "@constants/LangTheme/Lang";
 import { ThemeData } from "@constants/LangTheme/Theme";
 import RNRestart from "react-native-restart";
-import { changeAppTheme, changeLanguage } from "@redux/actions/appSettings";
-import { changeLang } from "@redux/reducers/appSettings";
+import { changeAppLanguage, changeAppTheme } from "@redux/actions/appSettings";
 const { dispatch } = store;
 
 const InitialScreen = ({ navigation }) => {
@@ -52,11 +51,11 @@ const InitialScreen = ({ navigation }) => {
   const onPressLang = (lan) => {
     setIsVisible(false);
     if (lan == "ar" && lan !== lang) {
-      changeLanguage(lan);
+      changeAppLanguage(lan);
       I18nManager.forceRTL(true);
       RNRestart.restart();
     } else if (lan !== lang) {
-      changeLanguage(lan);
+      changeAppLanguage(lan);
       I18nManager.forceRTL(false);
       RNRestart.restart();
     }

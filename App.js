@@ -5,9 +5,10 @@ import Login from "@features/Login/Login";
 import Routes from "@navigation/Routes";
 import { Provider } from "react-redux";
 import store from "@redux/store";
-import { changeAppTheme, changeLanguage } from "@redux/actions/appSettings";
+import { changeAppLanguage, changeAppTheme } from "@redux/actions/appSettings";
 import strings from "@constants/lang";
 import { getData } from "@utils/helperFunctions";
+import { STORAGE_KEYS } from "@constants/constant";
 const { dispatch } = store;
 
 const App = () => {
@@ -17,10 +18,10 @@ const App = () => {
   }, []);
   const AppLang = async () => {
     try {
-      let myLang = await getData("language");
+      let myLang = await getData(STORAGE_KEYS.APP_LANGUAGE);
       console.log(myLang);
       if (!!myLang) {
-        changeLanguage(myLang);
+        changeAppLanguage(myLang);
       }
     } catch (error) {
       console.log("No language Data Found ", error);
@@ -28,7 +29,7 @@ const App = () => {
   };
   const AppTheme = async () => {
     try {
-      let myTheme = await getData("theme");
+      let myTheme = await getData(STORAGE_KEYS.APP_THREME);
       if (!!myTheme) {
         changeAppTheme(myTheme);
       }
