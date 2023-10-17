@@ -9,6 +9,7 @@ import { changeAppLanguage, changeAppTheme } from "@redux/actions/appSettings";
 import strings from "@constants/lang";
 import { getData } from "@utils/helperFunctions";
 import { STORAGE_KEYS } from "@constants/constant";
+import FlashMessage from "react-native-flash-message";
 const { dispatch } = store;
 
 const App = () => {
@@ -19,7 +20,6 @@ const App = () => {
   const AppLang = async () => {
     try {
       let myLang = await getData(STORAGE_KEYS.APP_LANGUAGE);
-      console.log(myLang);
       if (!!myLang) {
         changeAppLanguage(myLang);
       }
@@ -40,6 +40,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Routes />
+      <FlashMessage position="top" />
     </Provider>
   );
 };

@@ -46,6 +46,8 @@ export default {
     CREATE_POST:"Create post",
     ADD_POST:"Add post",
     NEXT:"Next",
-    DESCRIPTION:"description..."
+    DESCRIPTION:"description...",
+    PLEASE_ENTER:"Please enter",
+    PLEASE_ENTER_VALID:"Please enter valid",
 
 }

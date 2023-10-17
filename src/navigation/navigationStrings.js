@@ -9,5 +9,6 @@ export default {
     CREATE_POST:"createPost",
     TAB_ROUTES:"tabRoutes",
     OTP:"otp",
+    WEB_VIEW:'webView'
 
 }

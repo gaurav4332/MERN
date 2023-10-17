@@ -43,9 +43,9 @@ const InitialScreen = ({ navigation }) => {
   };
   const privacyPolicy = (type = 1) => {
     if (type == 1) {
-      alert("Terms");
+      navigation.navigate(navigationStrings.WEB_VIEW);
     } else {
-      alert("Privacy Policy");
+      navigation.navigate(navigationStrings.WEB_VIEW);
     }
   };
   const onPressLang = (lan) => {

@@ -17,6 +17,8 @@ import strings from "@constants/lang";
 import HeaderComp from "@components/HeaderComp";
 import fonts from "@assets/fonts";
 import TextComp from "@components/TextComp";
+import { showFlashMessage } from "@utils/helperFunctions";
+import validatior from "@utils/validations";
 
 const Login = ({ navigation }) => {
   const [data, setData] = useState({
@@ -24,6 +26,22 @@ const Login = ({ navigation }) => {
     password: "",
   });
   const [secureText, setSecureText] = useState(true);
+  const isValidData = () => {
+    const { email, password } = data;
+    const error = validatior({
+      email,
+      password,
+    });
+    if (error) {
+      showFlashMessage("danger", error, "danger");
+    }
+    else{
+      showFlashMessage("success", "login Success", "success");
+    }
+  };
+  const onLogin = () => {
+    const valid = isValidData();
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -79,12 +97,7 @@ const Login = ({ navigation }) => {
               </View>
               <Text style={styles.forgotText}>{strings.FORGOT_PASSWORD}</Text>
             </View>
-            <ButtonComp
-              btnText={strings.LOGIN}
-              onClick={() => {
-                console.log("Data   => ", data), navigation.navigate("Home");
-              }}
-            />
+            <ButtonComp btnText={strings.LOGIN} onClick={onLogin} />
           </View>
         </TouchableWithoutFeedback>
       </WrapperContainer>

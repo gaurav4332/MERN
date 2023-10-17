@@ -1,4 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import fonts from "@assets/fonts";
+import { showMessage } from "react-native-flash-message";
+
+// ****************************STORAGE FUNCTION ***************************************
 
 export const storeData = async (key, value) => {
   try {
@@ -23,4 +27,15 @@ export const getData = async (key) => {
   } catch (err) {
     return err;
   }
+};
+
+// ****************************FLASH_MESSAGE  FUNCTION ***************************************
+
+export const showFlashMessage = (type, msg, icon) => {
+  showMessage({
+    message: msg,
+    type: type,
+    icon: icon,
+    duration: 2500,
+  });
 };
