@@ -17,6 +17,8 @@ import strings from "@constants/lang";
 import HeaderComp from "@components/HeaderComp";
 import fonts from "@assets/fonts";
 import TextComp from "@components/TextComp";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import navigationStrings from "@navigation/navigationStrings";
 
 const Signup = ({ navigation }) => {
   const [data, setData] = useState({
@@ -28,103 +30,105 @@ const Signup = ({ navigation }) => {
   });
   const [secureText, setSecureText] = useState(true);
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <WrapperContainer>
-          <HeaderComp />
-          <View
-            style={{
-              flex: 1,
-              padding: 16,
-              justifyContent: "space-between",
-            }}
-          >
-            <View >
-              <TextComp style={styles.headingTextStyle} text= {strings.CREATE_NEW_ACCOUNT}/>
-              <TextComp style={styles.textStyle} text= {strings.CREATE_AN_ACCOUNT_SO_YOU_CAN_CONTINUE}/>
-              <View style={{ marginTop: verticalScale(35) }}>
-                <TextInputComp
-                  value={data.userName}
-                  // keyboardType=""
-                  placeholder={strings.USERNAME}
-                  inputStyle={styles.InputStyle}
-                  onChangeText={(txt) => {
-                    setData({
-                      ...data,
-                      userName: txt,
-                    });
-                  }}
-                />
-                <TextInputComp
-                  value={data.fullName}
-                  // keyboardType=""
-                  placeholder={strings.FULL_NAME}
-                  inputStyle={styles.InputStyle}
-                  onChangeText={(txt) => {
-                    setData({
-                      ...data,
-                      fullName: txt,
-                    });
-                  }}
-                />
-                <TextInputComp
-                  value={data.email}
-                  keyboardType="email-address"
-                  placeholder={strings.EMAIL}
-                  inputStyle={styles.InputStyle}
-                  onChangeText={(txt) => {
-                    setData({
-                      ...data,
-                      email: txt,
-                    });
-                  }}
-                />
-                <TextInputComp
-                  value={data.password}
-                  // keyboardType=""
-                  placeholder={strings.PASSWORD}
-                  inputStyle={styles.InputStyle}
-                  secureTextEntry={secureText}
-                  secureText={secureText ? strings.SHOW : strings.HIDE}
-                  onPressSecure={() => setSecureText(!secureText)}
-                  onChangeText={(txt) => {
-                    setData({
-                      ...data,
-                      password: txt,
-                    });
-                  }}
-                />
-                <TextInputComp
-                  value={data.confirmPassword}
-                  // keyboardType=""
-                  placeholder={strings.CONFIRM_PASSWORD}
-                  inputStyle={styles.InputStyle}
-                  secureTextEntry={secureText}
-                  secureText={secureText ? strings.SHOW : strings.HIDE}
-                  onPressSecure={() => setSecureText(!secureText)}
-                  onChangeText={(txt) => {
-                    setData({
-                      ...data,
-                      confirmPassword: txt,
-                    });
-                  }}
-                />
-              </View>
-              {/* <Text style={styles.forgotText}>{strings.FORGOT_PASSWORD}</Text> */}
+    <WrapperContainer>
+      <HeaderComp />
+      <KeyboardAwareScrollView>
+        <View
+          style={{
+            height: "100%",
+            padding: 16,
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ height: "100%", width: "100%" }}>
+            <TextComp
+              style={styles.headingTextStyle}
+              text={strings.CREATE_NEW_ACCOUNT}
+            />
+            <TextComp
+              style={styles.textStyle}
+              text={strings.CREATE_AN_ACCOUNT_SO_YOU_CAN_CONTINUE}
+            />
+            <View style={{ marginTop: verticalScale(35) }}>
+              <TextInputComp
+                value={data.userName}
+                keyboardType="default"
+                placeholder={strings.USERNAME}
+                inputStyle={styles.InputStyle}
+                onChangeText={(txt) => {
+                  setData({
+                    ...data,
+                    userName: txt,
+                  });
+                }}
+              />
+              <TextInputComp
+                value={data.fullName}
+                keyboardType="default"
+                placeholder={strings.FULL_NAME}
+                inputStyle={styles.InputStyle}
+                onChangeText={(txt) => {
+                  setData({
+                    ...data,
+                    fullName: txt,
+                  });
+                }}
+              />
+              <TextInputComp
+                value={data.email}
+                keyboardType="email-address"
+                placeholder={strings.EMAIL}
+                inputStyle={styles.InputStyle}
+                onChangeText={(txt) => {
+                  setData({
+                    ...data,
+                    email: txt,
+                  });
+                }}
+              />
+              <TextInputComp
+                value={data.password}
+                keyboardType="default"
+                placeholder={strings.PASSWORD}
+                inputStyle={styles.InputStyle}
+                secureTextEntry={secureText}
+                secureText={secureText ? strings.SHOW : strings.HIDE}
+                onPressSecure={() => setSecureText(!secureText)}
+                onChangeText={(txt) => {
+                  setData({
+                    ...data,
+                    password: txt,
+                  });
+                }}
+              />
+              <TextInputComp
+                value={data.confirmPassword}
+                keyboardType="default"
+                placeholder={strings.CONFIRM_PASSWORD}
+                inputStyle={styles.InputStyle}
+                secureTextEntry={secureText}
+                secureText={secureText ? strings.SHOW : strings.HIDE}
+                onPressSecure={() => setSecureText(!secureText)}
+                onChangeText={(txt) => {
+                  setData({
+                    ...data,
+                    confirmPassword: txt,
+                  });
+                }}
+              />
             </View>
+          </View>
+          <View style={{ height: "50%", justifyContent: "center" }}>
             <ButtonComp
               btnText={strings.LOGIN}
               onClick={() => {
-                console.log("Data   => ", data), navigation.navigate("Home");
+                navigation.navigate(navigationStrings.OTP);
               }}
             />
           </View>
-        </WrapperContainer>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        </View>
+      </KeyboardAwareScrollView>
+    </WrapperContainer>
   );
 };
 
@@ -137,26 +141,21 @@ const styles = StyleSheet.create({
   headingTextStyle: {
     fontSize: textScale(28),
     fontFamily: fonts.BarlowBold,
-    color: colors.whiteColor,
-    // paddingVertical: verticalScale(30),
   },
   textStyle: {
     fontSize: textScale(13),
     fontFamily: fonts.BarlowRegular,
-    color: colors.whiteColor,
     marginVertical: verticalScale(7),
-    // paddingVertical: verticalScale(30),
   },
   forgotText: {
     fontSize: textScale(12),
     fontFamily: fonts.BarlowSemiBold,
     color: colors.blueColor,
     marginVertical: verticalScale(7),
-    textAlign:'right'
+    textAlign: "right",
     // paddingVertical: verticalScale(30),
   },
   InputStyle: {
     backgroundColor: colors.lightGrey,
   },
 });
-

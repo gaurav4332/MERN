@@ -29,9 +29,9 @@ const Login = ({ navigation }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <WrapperContainer>
-          <HeaderComp />
+      <WrapperContainer>
+        <HeaderComp />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View
             style={{
               flex: 1,
@@ -39,9 +39,15 @@ const Login = ({ navigation }) => {
               justifyContent: "space-between",
             }}
           >
-            <View >
-              <TextComp style={styles.headingTextStyle} text={strings.WELCOME_BACK}/>
-              <TextComp style={styles.textStyle} text={strings.WE_ARE_HAPPY_TO_SEE}/>
+            <View>
+              <TextComp
+                style={styles.headingTextStyle}
+                text={strings.WELCOME_BACK}
+              />
+              <TextComp
+                style={styles.textStyle}
+                text={strings.WE_ARE_HAPPY_TO_SEE}
+              />
               <View style={{ marginTop: verticalScale(35) }}>
                 <TextInputComp
                   value={data.email}
@@ -57,7 +63,7 @@ const Login = ({ navigation }) => {
                 />
                 <TextInputComp
                   value={data.password}
-                  // keyboardType=""
+                  keyboardType="default"
                   placeholder={strings.PASSWORD}
                   inputStyle={styles.InputStyle}
                   secureTextEntry={secureText}
@@ -80,8 +86,8 @@ const Login = ({ navigation }) => {
               }}
             />
           </View>
-        </WrapperContainer>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </WrapperContainer>
     </KeyboardAvoidingView>
   );
 };
@@ -95,25 +101,20 @@ const styles = StyleSheet.create({
   headingTextStyle: {
     fontSize: textScale(28),
     fontFamily: fonts.BarlowBold,
-    color: colors.whiteColor,
-    textAlign:'left'
-    // paddingVertical: verticalScale(30),
+    textAlign: "left",
   },
   textStyle: {
     fontSize: textScale(13),
     fontFamily: fonts.BarlowRegular,
-    color: colors.whiteColor,
     marginVertical: verticalScale(7),
-    textAlign:'left'
-    // paddingVertical: verticalScale(30),
+    textAlign: "left",
   },
   forgotText: {
     fontSize: textScale(12),
     fontFamily: fonts.BarlowSemiBold,
     color: colors.blueColor,
     marginVertical: verticalScale(7),
-    textAlign:'right'
-    // paddingVertical: verticalScale(30),
+    textAlign: "right",
   },
   InputStyle: {
     backgroundColor: colors.lightGrey,

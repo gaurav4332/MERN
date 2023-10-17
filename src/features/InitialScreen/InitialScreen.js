@@ -98,9 +98,18 @@ const InitialScreen = ({ navigation }) => {
         </View>
         <View style={{ flex: 0.7, justifyContent: "flex-end" }}>
           <TextComp text={strings.BY_CLICKING_LOG_IN}>
-            <Text onPress={() => privacyPolicy(1)}>{strings.TERMS}</Text>.{" "}
-            {strings.LEARN_HOW_WE_PRCOESS}{" "}
-            <Text onPress={() => privacyPolicy(2)}>
+            <Text
+              style={{ color: colors.blueColor }}
+              onPress={() => privacyPolicy(1)}
+            >
+              {" "}
+              {strings.TERMS}
+            </Text>
+            . {strings.LEARN_HOW_WE_PRCOESS}{" "}
+            <Text
+              style={{ color: colors.blueColor }}
+              onPress={() => privacyPolicy(2)}
+            >
               {strings.PRIVACY_POLICY}
             </Text>
           </TextComp>
@@ -224,7 +233,6 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: textScale(12),
     textAlign: "center",
-    color: colors.whiteColor,
     fontFamily: fonts.BarlowRegular,
   },
   btnStyle: {

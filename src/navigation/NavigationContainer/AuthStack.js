@@ -1,7 +1,8 @@
 import React from "react";
 import navigationStrings from "@navigation/navigationStrings";
 
-import { InitialScreen,Login, Signup } from "@features";
+import { InitialScreen,Login, Signup,Otp } from "@features";
+
 
 export default function (Stack) {
     return (
@@ -19,6 +20,11 @@ export default function (Stack) {
             <Stack.Screen
                 name={navigationStrings.SIGNUP}
                 component={Signup}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={navigationStrings.OTP}
+                component={Otp}
                 options={{ headerShown: false }}
             />
         </>

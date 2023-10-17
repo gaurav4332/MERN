@@ -8,5 +8,6 @@ export default {
     SIGNUP:"signup",
     CREATE_POST:"createPost",
     TAB_ROUTES:"tabRoutes",
+    OTP:"otp",
 
 }
